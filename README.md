@@ -1,4 +1,4 @@
-# php-mysql-game
+# node-mysql-game
 node-mysql-game is a basic CRUD application utilizing an HTML front end, Javascript back end and SQL database, intended to be deployed on a linux server. 
 
 Users will be able to register, log in and out, and perform operations to play the game. 
