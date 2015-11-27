@@ -203,6 +203,36 @@ io.on('connection', function(socket){
             });
         });
     });
+    /*
+    Attack - Takes a source row, a destination row, and number of troops
+    */
+    socket.on('attack', function(info) {
+        if (!authenticated()) return;
+        scan(Number(info.source));
+        scan(Number(info.target));
+console.log('Trying to attack');
+        // Find out if the logged in player owns the source row
+        var sql = "SELECT id FROM gamerows WHERE ownerusername = ? AND id = ?", inserts = [username, info.source];
+        sql = mysql.format(sql, inserts);
+        pool.query(sql, function(err, rows, fields) {
+            if (err) throw err; 
+            if (!rows) {
+                console.log("Player tried to attack with a row they don't own");
+                return;
+            }
+            // Perform the attack
+            sql = "call attack(?, ?, ?)", inserts = [info.source, info.target, info.attackers];
+            sql = mysql.format(sql, inserts);
+            pool.query(sql, function(err, rows, fields) {
+                if (err) throw err; 
+                if (!rows) {
+                    console.log("No rows");
+                    return;
+                }
+            });
+            console.log('attack successful');
+        });
+    });
     console.log('a user connected');
 });
 /*

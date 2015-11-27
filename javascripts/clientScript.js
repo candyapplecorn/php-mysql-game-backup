@@ -76,6 +76,29 @@ socket.on('scan', function(trth) {
 });
 
 /*
+Attack event listener
+*/
+(function(){
+var source = $('#attack-form .buttonField div:nth-child(1) input'),
+    target = $('#attack-form .buttonField div:nth-child(2) input'),
+    attackers = $('#attack-form .buttonField div:nth-child(3) input'),
+    button = $('#attack-form button');
+
+$(button).click(function(event){ 
+    event.preventDefault();
+    if ($.isNumeric($(source).val()) && $.isNumeric($(attackers).val()) && $.isNumeric($(target).val())) {
+        socket.emit('attack', {
+            source: $(source).val(), 
+            target: $(target).val(), 
+            attackers: $(attackers).val() 
+        });
+    }
+    $(source).val('');
+    $(target).val('');
+    $(attackers).val('');
+});
+}());
+/*
 Attach event listener to catch "My Rows"
 */
 socket.on('myRows-success', function(trth) {
