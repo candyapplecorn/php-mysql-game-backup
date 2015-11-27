@@ -1,0 +1,5 @@
+# Ignore all .ini files since they contain credentials #
+########################################################
+*.ini
+# Ignore the credentials file #
+credentials*
