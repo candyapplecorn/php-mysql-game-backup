@@ -225,10 +225,15 @@ Will use select count(owner) from gamerows where owner = source_row.owner
 CREATE PROCEDURE found_new_row (source_row INT, new_row INT)
 BEGIN
     DECLARE cash, numrows, cost, userid INT;
-    SELECT POW(COUNT(owner), COUNT(owner)), owner, money
+    SELECT owner, money
     FROM gamerows as a
     WHERE owner = (SELECT owner FROM gamerows WHERE id = source_row)
-    INTO cost, userid, cash;
+    INTO userid, cash;
+
+    SELECT POW(COUNT(owner), COUNT(owner))
+    FROM gamerows
+    WHERE owner = (SELECT owner FROM gamerows WHERE id = source_row)
+    INTO cost;
 
     IF cash >= cost AND (SELECT morale FROM gamerows WHERE id = new_row) < 1 THEN
 	    UPDATE gamerows
