@@ -3,3 +3,6 @@
 *.ini
 # Ignore the credentials file #
 credentials*
+
+# Ignore node_modules - They can be downloaded via `npm install` #
+node_modules
